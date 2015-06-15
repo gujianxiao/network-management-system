@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0;border:0;}
+
+#title{
+	margin:0px auto;
+	padding:0px;
+	height:100px;
+	width:1000px;;
+	font-size:36px;
+	line-height:100px;
+	font-family:"宋体";
+	background-image:url(img/title.jpg);
+	}
+#menu{
+	width:250px;
+	height:750px;
+	font-size:18px;
+	font-family:"黑体";
+	float:left;
+}
+#showpart{
+	border:inset ;
+	border-width:2px;
+	border-color:#666;
+	width: 746px;
+	height: 500px;
+	float: right;
+}
+
+#showwindow{
+	width:900px;
+	height:500px;
+	border:none;
+}
+
+#info{
+	height:50px;
+	font-size:14px;
+	font-family:"宋体";
+}
+#view
+{
+	margin:0px auto;
+	width:1200px;
+	height:400px;
+}
+
+
+.list li{
+	width:250px;
+	height:auto;
+	font-size:25px;
+	background:#3F4269;
+	list-style:none;
+}
+.list li ul li{
+	width: auto;;
+	height: 25px;
+	font-size: 20px;
+	padding: 0px;
+	margin:0px;
+	background:#5487A5;
+}
+
