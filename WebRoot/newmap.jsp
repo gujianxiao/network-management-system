@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="java.sql.*" %>
+<%@page import="bean.sendInterestsbean" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <base href="<%=basePath%>">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
     <meta charset="utf-8"></meta>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
@@ -37,27 +43,27 @@
 <title>无标题文档</title>
 <script src="http://api.map.baidu.com/api?v=1.5&ak=x8F38EeqBjcY3lWamhSQkfOW" type="text/javascript"></script>
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+
 <style type="text/css">  
 html{height:100%}  
 body{height:100%;margin:0px;padding:0px}  
 #container{height:100%}  
 </style> 
 <jsp:useBean id="datacontrol" scope="page" class="bean.databean" />
+
+
 <%
-    ResultSet rs = null;
-    Connection conn = null;
-    int[] nodeId=new int[10];
-    String[] location=new String[10];
-    String[] lng=new String[10];
-    String[] lat=new String[10];
-    String[] exist=new String[10];
-    int ca=0;
-    int count=0;
-    String sql="select * from nodeinfo"; 
-    try{  
-    conn=datacontrol.getConn();
-    
-    rs=datacontrol.executeSQL(sql);
+		    int[] nodeId=new int[10];
+		    String[] location=new String[10];
+		    String[] lng=new String[10];
+		    String[] lat=new String[10];
+		    String[] exist=new String[10];
+		    int ca=0;
+		    int count=0;
+    ResultSet rs=(ResultSet)request.getAttribute("result"); 
+    if(rs!=null){
+    System.out.println("get rs!");
     while(rs.next()){
     nodeId[count]=rs.getInt(1);
     location[count]=rs.getString(2);
@@ -67,17 +73,13 @@ body{height:100%;margin:0px;padding:0px}
     count++;
      }
      }
-     catch(SQLException e){
-     e.printStackTrace();
-     }
-     rs.close();
-     conn.close();    
+
 %>
 
 
 </head>
 
-<body>
+<body >
 
 <div id="container"></div> 
 <script type="text/javascript">
@@ -130,6 +132,6 @@ for(ca=0;ca<count;ca++){%>
 
 </script> 
  
-
+	<div>loading!!!</div>
 </body>
 </html>

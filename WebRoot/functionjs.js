@@ -1,6 +1,9 @@
 function showmap(){
+	$("#showwindow").attr("src","http://cb-qth6:8080/ndn_web_system_prototype/servlet/communication?action=sendLocation");
+	}
+function showtopo(){
 	
-	$("#showwindow").attr("src","newmap.jsp");
+	$("#showwindow").attr("src","topo.jsp");
 	}
 
 function showsend(){

@@ -186,53 +186,58 @@ public class sendInterestsbean {
 	{
 		recieveDatabean dealData=new recieveDatabean();
 		String dataInfo=null;
-		String recieveData="20";
+		String recieveData="28";
 		String Interest=prefix;
-		Interest+="ndn:/wsn/ins";
+		Interest+="ndn:/wsn/ints";
 		//左下右上
 		Interest+="/";
         Interest+=lng.substring(6, 10);
-		Interest+="/";
+		Interest+=",";
     	Interest+=lat.substring(5, 9);
 		Interest+="/";
         Interest+=lng.substring(6, 10);
-		Interest+="/";
+		Interest+=",";
     	Interest+=lat.substring(5, 9);
 		Interest+="/";
     	Interest+=dataType;
 		//time
 		String[] command={"/bin/sh","-c",Interest};
 
-		dataInfo=runCommand(command);
+		dataInfo=runCommand(command).substring(0,2);
         System.out.println(dataInfo);
        try {
     	   dealData.setInterests(Interest);
     	   dealData.setNodeId(nodeId);
     	   dealData.setType(dataType);
-		boolean finish= dealData.recieveDealing(dataInfo, "data");
-	} catch (SQLException e) {
+    	   if(dataInfo!=null){
+		   int finish= dealData.recieveDealing(dataInfo, "data");
+			if(finish>0){
+				 System.out.println("update database success!");
+				return "update database success,comeback data is "+dataInfo;
+			                     }
+			else {
+			 System.out.println("update database failed!");
+			 return "update database failed,comeback data is "+dataInfo;
+			         }
+    	   }
+    	   else{
+  			 System.out.println("no Data Info!");
+    	   }
+	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
         //deal with the data;
 		//Thread.sleep(3000);
-		return recieveData;
+		return "no Data Info!";
 		
 	}
 	public String sendLocation()
 	{
 		recieveDatabean dealData=new recieveDatabean();
 		String dataInfo=null;
-		String recieveData="20";
 		String Interest=prefix;
 		Interest+="ndn:/wsn/location";
-		//左下右上
-//	    Interest+=lng;
-//		Interest+="/";
-//		Interest+=lat;
-//		Interest+="/";
-//		Interest+=dataType;
-		//time
 		String[] command={"/bin/sh","-c",Interest};
 
 		dataInfo=runCommand(command);
@@ -241,16 +246,65 @@ public class sendInterestsbean {
     	   dealData.setInterests(Interest);
     	   dealData.setNodeId(nodeId);
     	   dealData.setType(dataType);
-		boolean finish= dealData.recieveDealing(dataInfo, "location");
+    	   if(dataInfo!=null){
+		int finish= dealData.recieveDealing(dataInfo, "location");
+		if(finish>0){
+			 System.out.println("update database success!");
+			return dataInfo;
+		                     }
+		else {
+		 System.out.println("update database failed!");
+	     return dataInfo;
+		          }
+    	}
+    	   else{
+    			 System.out.println("no Location Info!");
+    	   }
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
         //deal with the data;
 		//Thread.sleep(3000);
-		return recieveData;
+		return "no Location Info!";
 		
 	}
-}
 
+
+public String senTopo()
+{
+	recieveDatabean dealData=new recieveDatabean();
+	String dataInfo=null;
+	String Interest=prefix;
+	Interest+="ndn:/wsn/topo";
+	String[] command={"/bin/sh","-c",Interest};
+
+	dataInfo=runCommand(command);
+    System.out.println(dataInfo);
+   try {
+	   dealData.setInterests(Interest);
+	   dealData.setNodeId(nodeId);
+	   dealData.setType(dataType);
+	   if(dataInfo!=null){
+	   int finish= dealData.recieveDealing(dataInfo, "topo");
+		if(finish>0){
+			 System.out.println("update database success!");
+		                     }
+		else {
+		 System.out.println("update database failed!");
+		          }
+	   }
+	   else{
+			 System.out.println("no Topo Info!");
+	   }
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+    //deal with the data;
+	//Thread.sleep(3000);
+	return "no Topo Info!";
+	
+}
+}
 

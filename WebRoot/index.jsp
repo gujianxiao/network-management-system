@@ -98,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                    <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
                         </a>
                         <ul style="height: 0px;" id="configSetting" class="nav nav-list secondmenu collapse">
-                            <li><a href="#"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</a></li>
+                            <li><a href="javascript:showtopo();"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;AddNode</a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-trash"></i>&nbsp;DeleteNode</a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-search"></i>&nbsp;SearchNode</a></li>

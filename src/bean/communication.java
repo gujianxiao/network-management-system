@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @WebServlet(asyncSupported = true)
 
 public class communication extends HttpServlet {
@@ -59,17 +60,50 @@ public class communication extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		String action=request.getParameter("action");
+		if(action.equalsIgnoreCase("sendLocation")){
+	     sendInterestsbean sendLocation=sendInterestsbean.getOnlyInstance();
+         String initiateinfo = sendLocation.start();
+     System.out.println(initiateinfo);
+        sendLocation.setPrefixId("ndndc add ndn:/ udp ");
+        sendLocation.setGatewayId("10.103.243.131");
+      //add a new road to ndnx
+       String connectinfo=sendLocation.connect();
+       System.out.println(connectinfo);
+      //send Interest
+       sendLocation.setPrefix("ndnpeek -c -w 10 ");
+       String recieveData=sendLocation.sendLocation();       
+//	    response.getWriter().println(recieveData);     
+		    //read data from database
+		    String sql="select * from nodeinfo"; 
+		    conn=datacontrol.getConn();	    
+		    rs=datacontrol.executeSQL(sql);
+    if(rs!=null){
+    System.out.println("get rs!");
+    request.setAttribute("result",rs);
+	request.getRequestDispatcher("../newmap.jsp").forward(request, response);	
+ }
+    else{
+    	System.out.println("read data from database failed!");
+    } 
+
+		}
+		
+		    if(action.equalsIgnoreCase("sendTopo")){
+	
+	        sendInterestsbean toposend=sendInterestsbean.getOnlyInstance();
+	        String initiateinfo = toposend.start();
+	        System.out.println(initiateinfo);
+	         toposend.setPrefixId("ndndc add ndn:/ udp ");
+	         toposend.setGatewayId("10.103.243.131");
+	         //add a new road to ndnx
+	        String connectinfo=toposend.connect();
+	        System.out.println(connectinfo);
+	        toposend.setPrefix("ndnpeek -c -w 10 ");
+	        String recieveData=toposend.senTopo();   
+	        response.getWriter().println(recieveData);
+	            System.out.println(recieveData);
+	     }
 	}
 
 	/**
@@ -84,7 +118,8 @@ public class communication extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		sendInterestsbean sendInterests=new sendInterestsbean();  
+//
+//		if(action.equalIgnoreCase("sendInterest")){
 		sendInterestsbean sendInterests=sendInterestsbean.getOnlyInstance();
 		//connect to database 
 		conn=datacontrol.getConn();	 
@@ -117,10 +152,12 @@ public class communication extends HttpServlet {
         System.out.println(connectinfo);
         //send Interest
         sendInterests.setPrefix("ndnpeek -c -w 10 ");
-        String recieveData=sendInterests.sendLocation();       
+        String recieveData=sendInterests.sendInterest();       
 	    response.getWriter().println(recieveData);    
-	}
 
+
+
+			}
 	/**
 	 * Initialization of the servlet. <br>
 	 *
